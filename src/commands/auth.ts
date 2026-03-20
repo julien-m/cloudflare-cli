@@ -45,12 +45,8 @@ authCommand
   .addHelpText("after", "\nExample:\n  cloudflare-cli auth test")
   .action(async () => {
     try {
-      const data = await client.get("/user/tokens/verify") as { result?: { status?: string } };
-      if (data?.result?.status === "active") {
-        log.success("Token is valid (active)");
-      } else {
-        log.success(`Token verified (status: ${data?.result?.status ?? "unknown"})`);
-      }
+      await client.get("/");
+      log.success("Token is valid");
     } catch (err) {
       handleError(err);
     }

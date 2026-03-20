@@ -64,16 +64,12 @@ async function request(method: Method, path: string, opts: RequestOptions = {}):
 
     const data = await res.json().catch(() => null);
 
-    const cf = data as { success?: boolean; errors?: { message: string }[]; result?: unknown; result_info?: unknown } | null;
-
     if (!res.ok) {
-      const msg = cf?.errors?.[0]?.message ?? res.statusText;
-      throw new CliError(res.status, `${res.status}: ${msg}`);
-    }
-
-    if (cf?.success === false) {
-      const msg = cf.errors?.[0]?.message ?? "Unknown Cloudflare API error";
-      throw new CliError(400, `400: ${msg}`);
+      const msg =
+        (data as Record<string, unknown>)?.message ??
+        ((data as Record<string, Record<string, unknown>>)?.error?.message as string) ??
+        res.statusText;
+      throw new CliError(res.status, `${res.status}: ${String(msg)}`);
     }
 
     return data;
