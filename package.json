@@ -17,5 +17,10 @@
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5.7.0"
+  },
+  "api2cli": {
+    "app": "cloudflare",
+    "credsEntry": "global/dev/cloudflare",
+    "authType": "bearer"
   }
 }

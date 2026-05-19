@@ -1,33 +1,55 @@
-import { existsSync, readFileSync, writeFileSync, unlinkSync, mkdirSync, chmodSync } from "fs";
-import { dirname } from "path";
-import { TOKEN_PATH, AUTH_TYPE, AUTH_HEADER, APP_CLI } from "./config.js";
+import { execFileSync } from "node:child_process";
+import { AUTH_TYPE, AUTH_HEADER, APP_CLI, CREDS_ENTRY } from "./config.js";
 import { CliError } from "./errors.js";
 
-/** Check if a token is configured */
-export function hasToken(): boolean {
-  return existsSync(TOKEN_PATH);
-}
-
-/** Read the stored token. Throws if not configured. */
+/** Read the stored token from the OS keychain via creds CLI. Throws if not configured. */
 export function getToken(): string {
-  if (!hasToken()) {
-    throw new CliError(2, "No token configured.", `Run: ${APP_CLI} auth set <token>`);
+  try {
+    return execFileSync("creds", ["get", CREDS_ENTRY, "--no-newline"], {
+      encoding: "utf-8",
+    });
+  } catch (err: unknown) {
+    const code = (err as { status?: number }).status;
+    if (code === 2) {
+      throw new CliError(2, "No token configured.", `Run: ${APP_CLI} auth set <token>`);
+    }
+    if (code === 3) {
+      throw new CliError(3, "Keychain locked or access denied.");
+    }
+    throw new CliError(4, "Failed to read token from keychain.");
   }
-  return readFileSync(TOKEN_PATH, "utf-8").trim();
 }
 
-/** Save a token to disk with restricted permissions (chmod 600). */
-export function setToken(token: string): void {
-  mkdirSync(dirname(TOKEN_PATH), { recursive: true });
-  writeFileSync(TOKEN_PATH, token.trim(), { mode: 0o600 });
-  // Ensure permissions even if file existed
-  chmodSync(TOKEN_PATH, 0o600);
+/** Check if a token is configured in the OS keychain */
+export function hasToken(): boolean {
+  try {
+    execFileSync("creds", ["get", CREDS_ENTRY, "--no-newline"], {
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-/** Delete the stored token. */
+/** Save a token to the OS keychain via creds CLI (interactive masked prompt). */
+export function setToken(): void {
+  execFileSync("creds", ["set", CREDS_ENTRY], {
+    encoding: "utf-8",
+    stdio: "inherit",
+  });
+}
+
+/** Delete the stored token from the OS keychain via creds CLI. */
 export function removeToken(): void {
-  if (existsSync(TOKEN_PATH)) {
-    unlinkSync(TOKEN_PATH);
+  try {
+    execFileSync("creds", ["rm", CREDS_ENTRY], {
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+  } catch {
+    // Ignore errors (entry may not exist)
   }
 }
 

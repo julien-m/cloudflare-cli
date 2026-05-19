@@ -8,11 +8,10 @@ export const authCommand = new Command("auth").description("Manage API authentic
 
 authCommand
   .command("set")
-  .description("Save your API token")
-  .argument("<token>", "Your API token")
-  .addHelpText("after", "\nExample:\n  cloudflare-cli auth set sk-abc123xyz")
-  .action((token: string) => {
-    setToken(token);
+  .description("Save your API token (interactive hidden prompt)")
+  .addHelpText("after", "\nExample:\n  cloudflare-cli auth set")
+  .action(async () => {
+    setToken();
     log.success("Token saved securely");
   });
 
@@ -21,7 +20,7 @@ authCommand
   .description("Display current token (masked by default)")
   .option("--raw", "Show the full unmasked token")
   .addHelpText("after", "\nExample:\n  cloudflare-cli auth show\n  cloudflare-cli auth show --raw")
-  .action((opts: { raw?: boolean }) => {
+  .action(async (opts: { raw?: boolean }) => {
     if (!hasToken()) {
       log.warn("No token configured. Run: cloudflare-cli auth set <token>");
       return;
@@ -34,7 +33,7 @@ authCommand
   .command("remove")
   .description("Delete the saved token")
   .addHelpText("after", "\nExample:\n  cloudflare-cli auth remove")
-  .action(() => {
+  .action(async () => {
     removeToken();
     log.success("Token removed");
   });
