@@ -12,7 +12,7 @@ type Method = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 /** Options for an API request */
 interface RequestOptions {
-  params?: Record<string, string>;
+  params?: Record<string, string | undefined>;
   body?: Record<string, unknown>;
   timeout?: number;
 }
@@ -21,13 +21,13 @@ interface RequestOptions {
  * Make an authenticated API request with retry logic.
  * Retries on 429 (rate limit) and 5xx (server errors).
  */
-async function request(method: Method, path: string, opts: RequestOptions = {}): Promise<unknown> {
+async function request(method: Method, path: string, opts: RequestOptions = {}): Promise<any> {
   let url = `${BASE_URL}${path}`;
 
   if (opts.params) {
-    const filtered = Object.fromEntries(
+    const filtered: Record<string, string> = Object.fromEntries(
       Object.entries(opts.params).filter(([, v]) => v !== undefined && v !== ""),
-    );
+    ) as Record<string, string>;
     if (Object.keys(filtered).length > 0) {
       url += `?${new URLSearchParams(filtered).toString()}`;
     }

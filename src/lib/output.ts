@@ -9,23 +9,26 @@ interface JsonEnvelope {
 
 export function output(
   data: unknown,
-  opts: { json?: boolean; format?: string; fields?: string[]; noHeader?: boolean } = {},
+  opts: { json?: boolean; format?: string; fields?: string[]; noHeader?: boolean } | boolean = {},
+  legacyFormat?: string,
 ): void {
-  const isJson = opts.json ?? globalFlags.json;
-  const format = isJson ? "json" : (opts.format ?? globalFlags.format);
+  const normalized =
+    typeof opts === "boolean" ? { json: opts, format: legacyFormat } : opts;
+  const isJson = normalized.json ?? globalFlags.json;
+  const format = isJson ? "json" : (normalized.format ?? globalFlags.format);
 
   switch (format) {
     case "json":
       printJson(data);
       break;
     case "csv":
-      printCsv(data, opts.fields, opts.noHeader ?? globalFlags.noHeader);
+      printCsv(data, normalized.fields, normalized.noHeader ?? globalFlags.noHeader);
       break;
     case "yaml":
       printYaml(data, 0);
       break;
     default:
-      printText(data, opts.fields, opts.noHeader ?? globalFlags.noHeader);
+      printText(data, normalized.fields, normalized.noHeader ?? globalFlags.noHeader);
   }
 }
 

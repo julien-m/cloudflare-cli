@@ -48,7 +48,7 @@ zonesResource
       if (opts.accountId) params.account_id = opts.accountId;
 
       const response = await client.get("/zones", params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -67,7 +67,7 @@ zonesResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -96,7 +96,7 @@ zonesResource
       }
 
       const response = await client.post("/zones", body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -113,7 +113,7 @@ zonesResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -148,7 +148,7 @@ zonesResource
       }
 
       const response = await client.post(`/zones/${zoneId}/purge_cache`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -167,7 +167,7 @@ zonesResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -196,7 +196,7 @@ zonesResource
       const response = await client.patch(`/zones/${zoneId}/settings/${settingName}`, {
         value,
       });
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -213,7 +213,7 @@ zonesResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.put(`/zones/${zoneId}/activation_check`, {});
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

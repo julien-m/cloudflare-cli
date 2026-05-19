@@ -40,7 +40,7 @@ settingsResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -60,7 +60,7 @@ settingsResource
   .action(async (zoneId: string, settingName: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings/${settingName}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -88,7 +88,7 @@ settingsResource
       const body: Record<string, unknown> = { value };
 
       const response = await client.patch(`/zones/${zoneId}/settings/${settingName}`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -110,7 +110,7 @@ settingsResource
       };
 
       const response = await client.patch(`/zones/${zoneId}/settings`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

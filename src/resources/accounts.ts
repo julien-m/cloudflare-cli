@@ -36,7 +36,7 @@ accountsResource
       if (opts.name) params.name = opts.name;
 
       const response = await client.get("/accounts", params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -55,7 +55,7 @@ accountsResource
   .action(async (accountId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/accounts/${accountId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -83,7 +83,7 @@ accountsResource
       if (opts.status) params.status = opts.status;
 
       const response = await client.get(`/accounts/${accountId}/members`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -103,7 +103,7 @@ accountsResource
   .action(async (accountId: string, memberId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/accounts/${accountId}/members/${memberId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -121,7 +121,7 @@ accountsResource
   .action(async (accountId: string, memberId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/accounts/${accountId}/members/${memberId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -140,7 +140,7 @@ accountsResource
   .action(async (accountId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/accounts/${accountId}/roles`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {

@@ -25,7 +25,7 @@ botResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/bot_management`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -60,7 +60,7 @@ botResource
       }
 
       const response = await client.put(`/zones/${zoneId}/bot_management`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

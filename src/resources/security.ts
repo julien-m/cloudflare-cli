@@ -23,7 +23,7 @@ securityResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings/security_level`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -43,7 +43,7 @@ securityResource
       const response = await client.patch(`/zones/${zoneId}/settings/security_level`, {
         value: opts.value,
       });
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -61,7 +61,7 @@ securityResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings/challenge_ttl`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -84,7 +84,7 @@ securityResource
       const response = await client.patch(`/zones/${zoneId}/settings/challenge_ttl`, {
         value: parseInt(opts.value || "0"),
       });
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -102,7 +102,7 @@ securityResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings/browser_check`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -122,7 +122,7 @@ securityResource
       const response = await client.patch(`/zones/${zoneId}/settings/browser_check`, {
         value: opts.value,
       });
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -140,7 +140,7 @@ securityResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/settings/privacy_pass`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -160,7 +160,7 @@ securityResource
       const response = await client.patch(`/zones/${zoneId}/settings/privacy_pass`, {
         value: opts.value,
       });
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

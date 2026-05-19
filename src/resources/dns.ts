@@ -49,7 +49,7 @@ dnsResource
       if (opts.proxied) params.proxied = "true";
 
       const response = await client.get(`/zones/${zoneId}/dns_records`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -69,7 +69,7 @@ dnsResource
   .action(async (zoneId: string, recordId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/dns_records/${recordId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -101,7 +101,7 @@ dnsResource
       if (opts.priority) body.priority = Number(opts.priority);
 
       const response = await client.post(`/zones/${zoneId}/dns_records`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -135,7 +135,7 @@ dnsResource
       if (opts.priority) body.priority = Number(opts.priority);
 
       const response = await client.patch(`/zones/${zoneId}/dns_records/${recordId}`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -153,7 +153,7 @@ dnsResource
   .action(async (zoneId: string, recordId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/dns_records/${recordId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -208,7 +208,7 @@ dnsResource
       );
 
       const response = await res.json();
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -225,7 +225,7 @@ dnsResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.post(`/zones/${zoneId}/dns_records/scan`, {});
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

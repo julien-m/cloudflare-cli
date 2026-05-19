@@ -40,7 +40,7 @@ rateLimitsResource
       };
 
       const response = await client.get(`/zones/${zoneId}/rate_limits`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -60,7 +60,7 @@ rateLimitsResource
   .action(async (zoneId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/rate_limits/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -108,7 +108,7 @@ rateLimitsResource
       if (opts.description) body.description = opts.description;
 
       const response = await client.post(`/zones/${zoneId}/rate_limits`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -151,7 +151,7 @@ rateLimitsResource
       if (opts.description) body.description = opts.description;
 
       const response = await client.put(`/zones/${zoneId}/rate_limits/${ruleId}`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -169,7 +169,7 @@ rateLimitsResource
   .action(async (zoneId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/rate_limits/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

@@ -30,7 +30,7 @@ wafResource
   .action(async (zoneId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/rulesets`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -50,7 +50,7 @@ wafResource
   .action(async (zoneId: string, rulesetId: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/rulesets/${rulesetId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -68,7 +68,7 @@ wafResource
   .action(async (zoneId: string, rulesetId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/rulesets/${rulesetId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -87,7 +87,7 @@ wafResource
   .action(async (zoneId: string, phase: string, opts: ActionOpts) => {
     try {
       const response = await client.get(`/zones/${zoneId}/rulesets/phases/${phase}/entrypoint`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json, format: opts.format });
     } catch (err) {
       handleError(err, opts.json);
@@ -117,7 +117,7 @@ wafResource
       if (opts.description) body.description = opts.description;
 
       const response = await client.post(`/zones/${zoneId}/rulesets/${rulesetId}/rules`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -147,7 +147,7 @@ wafResource
       if (opts.enabled !== undefined) body.enabled = opts.enabled;
 
       const response = await client.patch(`/zones/${zoneId}/rulesets/${rulesetId}/rules/${ruleId}`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -166,7 +166,7 @@ wafResource
   .action(async (zoneId: string, rulesetId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/rulesets/${rulesetId}/rules/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);

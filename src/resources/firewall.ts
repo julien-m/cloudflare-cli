@@ -41,7 +41,7 @@ firewallResource
       if (opts.mode) params.mode = opts.mode;
 
       const response = await client.get(`/zones/${zoneId}/firewall/access_rules/rules`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -72,7 +72,7 @@ firewallResource
       if (opts.notes) body.notes = opts.notes;
 
       const response = await client.post(`/zones/${zoneId}/firewall/access_rules/rules`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -96,7 +96,7 @@ firewallResource
       if (opts.notes) body.notes = opts.notes;
 
       const response = await client.patch(`/zones/${zoneId}/firewall/access_rules/rules/${ruleId}`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -114,7 +114,7 @@ firewallResource
   .action(async (zoneId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/firewall/access_rules/rules/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -142,7 +142,7 @@ firewallResource
       if (opts.mode) params.mode = opts.mode;
 
       const response = await client.get(`/accounts/${accountId}/firewall/access_rules/rules`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -173,7 +173,7 @@ firewallResource
       if (opts.notes) body.notes = opts.notes;
 
       const response = await client.post(`/accounts/${accountId}/firewall/access_rules/rules`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -191,7 +191,7 @@ firewallResource
   .action(async (accountId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/accounts/${accountId}/firewall/access_rules/rules/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -217,7 +217,7 @@ firewallResource
       };
 
       const response = await client.get(`/zones/${zoneId}/firewall/ua_rules`, params);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       const fields = opts.fields?.split(",");
       output(data, { json: opts.json, format: opts.format, fields });
     } catch (err) {
@@ -247,7 +247,7 @@ firewallResource
       if (opts.description) body.description = opts.description;
 
       const response = await client.post(`/zones/${zoneId}/firewall/ua_rules`, body);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output(data, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
@@ -265,7 +265,7 @@ firewallResource
   .action(async (zoneId: string, ruleId: string, opts: ActionOpts) => {
     try {
       const response = await client.delete(`/zones/${zoneId}/firewall/ua_rules/${ruleId}`);
-      const data = (response as Record<string, unknown>).result;
+      const data = (response as Record<string, any>).result;
       output({ deleted: true, ...data }, { json: opts.json });
     } catch (err) {
       handleError(err, opts.json);
